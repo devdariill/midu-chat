@@ -11,6 +11,13 @@ supabase-db-Authentication-providers-x-URL
 
 ![Captura de pantalla_20230120_025533](https://user-images.githubusercontent.com/93483481/213645354-b317165d-b60d-4033-a239-005b040d3c0e.png)
 
-end
+generate client id , client secret 
 
 ![Captura de pantalla_20230120_025755](https://user-images.githubusercontent.com/93483481/213645378-0f85edc5-b4c5-48e6-b728-b255951fe1a5.png)
+
+![image](https://user-images.githubusercontent.com/93483481/213645938-756d73a5-0176-4eb7-a999-1742338204c0.png)
+
+use this in supabase part 
+
+![image](https://user-images.githubusercontent.com/93483481/213645981-7951fe9b-b06e-49b4-ade4-0c1907f56f9c.png)
+
