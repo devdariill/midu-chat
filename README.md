@@ -28,3 +28,7 @@ null: false - message user.id
 #new policy insert
 
 ![image](https://user-images.githubusercontent.com/93483481/213671708-d7581b33-65da-4ccc-9e5a-5f5112f0634c.png)
+
+#realtime
+
+supabase-database-replication-x_tables-select_x
