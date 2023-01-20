@@ -48,7 +48,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet context={{ supabase }} />
+        <Outlet context={{ supabase, name: "devdariill" }} />
         <div>Outlet</div>
         <ScrollRestoration />
         <Scripts />
