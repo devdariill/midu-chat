@@ -10,31 +10,37 @@ import {
 } from "@remix-run/react";
 import styles from "./styles/global.css";
 import { LoaderArgs } from "@remix-run/node";
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
+// import { createClient } from "@supabase/supabase-js";// old
 import { useState, useMemo, useEffect } from "react";
 import { Database } from "./types/database";
-import { supabase } from "./utils/supabase.server";
+import { createSupabaseServerClient } from "./utils/supabase.server";
+import { json } from "@remix-run/node";
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Midu Chat en Tiempo Real",
   viewport: "width=device-width,initial-scale=1",
 });
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
-export const loader = async ({}: LoaderArgs) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const env = {
     SUPABASE_URL: process.env.SUPABASE_URL!,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
   };
+  const response = new Response();
+  // guardar cookies de la session ?.en el servidor
+  const supabase = createSupabaseServerClient({ request, response });
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  return { env, session };
+  return json({ env, session }, { headers: response.headers });
 };
 export default function App() {
   const { env, session } = useLoaderData<typeof loader>();
   console.log("Server", session);
-  const [supabase] = useState(() =>
-    createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+  const [supabase] = useState(
+    () => createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+    // createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
   );
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {

@@ -14,7 +14,8 @@
     "@supabase/supabase-js": "2.4.0",
     "@vercel/node": "2.6.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "@supabase/auth-helpers-remix": "0.1.4"
   },
   "devDependencies": {
     "@remix-run/dev": "1.11.0",
