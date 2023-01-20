@@ -11,8 +11,9 @@ import {
 import styles from "./styles/global.css";
 import { LoaderArgs } from "@remix-run/node";
 import { createClient } from "@supabase/supabase-js";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Database } from "./types/database";
+import { supabase } from "./utils/supabase.server";
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Midu Chat en Tiempo Real",
@@ -24,13 +25,22 @@ export const loader = async ({}: LoaderArgs) => {
     SUPABASE_URL: process.env.SUPABASE_URL!,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
   };
-  return { env };
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  return { env, session };
 };
 export default function App() {
-  const { env } = useLoaderData<typeof loader>();
+  const { env, session } = useLoaderData<typeof loader>();
+  console.log("Server", session);
   const [supabase] = useState(() =>
     createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
   );
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Client", session);
+    });
+  }, []);
   // useMemo = useState_supabase
   // const supabase = useMemo(
   //   () => createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY),
