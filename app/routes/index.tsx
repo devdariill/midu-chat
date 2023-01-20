@@ -2,6 +2,7 @@ import { createSupabaseServerClient } from "~/utils/supabase.server";
 import { Form, useLoaderData } from "@remix-run/react";
 import { LoaderArgs, json, ActionArgs } from "@remix-run/node";
 import { Login } from "~/components/Login";
+import { RealTimeMessages } from "~/components/RealTimeMessages";
 //loader Server
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();
@@ -31,7 +32,7 @@ export default function Index() {
         <input type="text" name="message" />
         <button type="submit">Send</button>
       </Form>
-      <pre>{JSON.stringify(messages, null, 2)}</pre>
+      <RealTimeMessages serverMessages={messages}/>
     </main>
   );
 }
