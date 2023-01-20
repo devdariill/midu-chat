@@ -16,6 +16,7 @@ export function RealTimeMessages({
         "postgres_changes", //broadcast
         { event: "INSERT", schema: "public", table: "messages" }, // filter
         (payload) => {
+          console.log("payload", payload)
           //callback
           const newMessage = payload.new as Message;
           // setMessage((messages) => [...messages, newMessage]); // TODO: FIX 2:25:47
@@ -25,6 +26,7 @@ export function RealTimeMessages({
         }
       )
       .subscribe();
+      // ?.subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
