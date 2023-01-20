@@ -24,3 +24,7 @@ use this in supabase part
 null: false - message user.id
 
 ![image](https://user-images.githubusercontent.com/93483481/213671185-f0df0369-0f25-4900-9727-4f671491881d.png)
+
+#new policy insert
+
+![image](https://user-images.githubusercontent.com/93483481/213671708-d7581b33-65da-4ccc-9e5a-5f5112f0634c.png)
