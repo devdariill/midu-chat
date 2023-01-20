@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRevalidator,
 } from "@remix-run/react";
 import styles from "./styles/global.css";
 import { LoaderArgs } from "@remix-run/node";
@@ -36,8 +37,9 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json({ env, session }, { headers: response.headers });
 };
 export default function App() {
-  const { env, session } = useLoaderData<typeof loader>();
-  console.log("Server", session);
+  const revalidator = useRevalidator();
+  const { env, session: serverSession } = useLoaderData<typeof loader>();
+  console.log("Server", serverSession);
   const [supabase] = useState(
     () => createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
     // createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
@@ -57,6 +59,17 @@ export default function App() {
   //   env.SUPABASE_URL,
   //   env.SUPABASE_ANON_KEY
   // )
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Session", session);
+      if (session?.access_token !== serverSession?.access_token) {
+        revalidator.revalidate();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
   return (
     <html lang="es">
       <head>
