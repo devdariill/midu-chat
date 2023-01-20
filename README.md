@@ -21,3 +21,6 @@ use this in supabase part
 
 ![image](https://user-images.githubusercontent.com/93483481/213645981-7951fe9b-b06e-49b4-ade4-0c1907f56f9c.png)
 
+null: false - message user.id
+
+![image](https://user-images.githubusercontent.com/93483481/213671185-f0df0369-0f25-4900-9727-4f671491881d.png)
